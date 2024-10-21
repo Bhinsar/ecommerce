@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{nav/base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <div class="container dashboard-container">
+            <h3 class="text-center  my-4">Admin Dashboard</h3>
+            <div class="row text-center p-4 admin">
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm dashboard-card p-3">
+                        <a href="/admin/product" class="text-decoration-none text-dark">
+                            <i class="fas fa-plus-circle fs-4"></i>
+                            <h5>Add Product</h5>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm dashboard-card p-3">
+                        <a href="/admin/category" class="text-decoration-none text-dark">
+                            <i class="fas fa-list-alt fs-4"></i>
+                            <h5>Category</h5>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm dashboard-card p-3">
+                        <a href="#" class="text-decoration-none text-dark">
+                            <i class="fas fa-book fs-4"></i>
+                            <h5>View Product</h5>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm dashboard-card p-3">
+                        <a href="#" class="text-decoration-none text-dark">
+                            <i class="fas fa-box fs-4"></i>
+                            <h5>Orders</h5>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm dashboard-card p-3">
+                        <a href="#" class="text-decoration-none text-dark">
+                            <i class="fas fa-user fs-4"></i>
+                            <h5>User</h5>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm dashboard-card p-3">
+                        <a href="#" class="text-decoration-none text-dark">
+                            <i class="fas fa-user-plus fs-4"></i>
+                            <h5>Add Admin</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+</body>
+</html>

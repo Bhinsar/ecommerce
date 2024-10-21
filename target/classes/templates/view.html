@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{nav/base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <style>
+            footer{
+              position: absoute;
+            }
+          </style>
+        <div class="container product-detail">
+            <h3 class="text-center">Product Details</h3>
+            <div class="row">
+                <!-- Product Image -->
+                <div class="col-md-6">
+                    <img th:src="@{img/category/animecups.jpeg}" class="img-fluid" alt="Product Image">
+                </div>
+                <!-- Product Info -->
+                <div class="col-md-6">
+                    <h4 class="product-title">MacBook Pro</h4>
+                    <p><strong>Description:</strong> MacBook Pro 15-inch</p>
+                    <p><strong>Product Details:</strong></p>
+                    <ul>
+                        <li>Status: <span class="status-available">Available</span></li>
+                        <li>Category: Electronics</li>
+                        <li>Policy: 7 Days Replacement & Return</li>
+                    </ul>
+                    <div class="product-price">Price: Rs 47,500.304 <del>Rs 50,000</del> <span class="text-success">0% off</span></div>
+    
+                    <!-- Icons for Delivery, Return, Free Shipping -->
+                    <div class="action-buttons mt-3">
+                         <a href="#" class="text-decoration-none text-dark"><i class="fa-solid fa-truck"> <p>Cash on delivery</p></i></a>
+                    </div>
+    
+                    <!-- Add to Cart Button -->
+                    <button class="btn ">Add to Cart</button>
+                    <a href="/cart"><button class="btn ">Show my Cart</button></a>
+
+                </div>
+            </div>
+        </div>
+          
+    </section>
+</body>
+</html>

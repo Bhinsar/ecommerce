@@ -1,0 +1,27 @@
+body {
+    background-color: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+.registration-container {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px black;
+    width: 100%;
+    max-width: 400px;
+}
+.btn-google,.btn-register {
+    background-color: #a364f5;
+    color: white;
+}
+
+.btn {
+    width: 100%;
+}
+.input-group-text {
+    cursor: pointer;
+}

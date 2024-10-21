@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{nav/base :: layout(~{::section})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section>
+      <div class="container mt-5">
+        <div class="row">
+          <!-- Category Add Section -->
+          <div class="col-md-5">
+            <div class="card">
+              <div class="card-header">
+                <h4>Category Add</h4>
+              </div>
+              <!-- Use th:if instead of th:block -->
+              <div class="text-center">
+                <div th:if="${session.Success}">
+                  <p class="text-success" th:text="${session.Success}"></p>
+                  <th:block
+                    th:text="${@commService.removeSessionMessage}"
+                  ></th:block>
+                </div>
+                <div th:if="${session.Error}">
+                  <p class="text-danger" th:text="${session.Error}"></p>
+                  <th:block
+                    th:text="${@commService.removeSessionMessage}"
+                  ></th:block>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <form
+                  action="/admin/savecategory"
+                  method="post"
+                  enctype="multipart/form-data"
+                >
+                  <div class="mb-3">
+                    <label for="categoryTitle" class="form-label">Name</label>
+                    <input
+                      name="categoryName"
+                      type="text"
+                      class="form-control"
+                      id="categoryTitle"
+                      placeholder="Enter category Name"
+                    />
+                    <div class="mb-3">
+                      <label for="image" class="form-label">Image</label>
+                      <input type="file" class="form-control" id="categoryImageName" name="file" required>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-100">
+                    Add
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Details Section -->
+          <div class="col-md-7">
+            <div class="card">
+              <div class="card-header">
+                <h4>Category Details</h4>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Id</th>
+                      <th>Category Name</th>
+                      <th>Category Image</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="category : ${categories}">
+                      <td th:text="${category.id}"></td>
+                      <td th:text="${category.categoryName}"></td>
+                      <td> <img th:src="@{'/img/category/'+${category.categoryImageName}}" alt="Category Image" width="100px" /></td>
+                      <td class="d-flex justify-content-between">
+                        <a
+                          th:href="'/admin/edit/'+${category.id}"
+                          class="btn btn-sm"
+                          >Edit</a
+                        ><a
+                          th:href="'/admin/delete/'+${category.id}"
+                          class="btn btn-sm"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+
+                    <!-- Add more rows as needed -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
