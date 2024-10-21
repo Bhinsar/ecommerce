@@ -19,14 +19,8 @@ public class ProductService {
     private ProductRepo  productRepo;
 
 
-    public Product saveProduct(Product product, MultipartFile imageFile) throws IOException {
-        
-       product.setImageName(imageFile.getOriginalFilename());
-       product.setImageType(imageFile.getContentType());
-       product.setImageData(imageFile.getBytes());
-       
+    public Product saveProduct(Product product){       
        return productRepo.save(product);
-
     }
     
 }

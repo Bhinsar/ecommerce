@@ -13,6 +13,22 @@
             <div class="card shadow">
               <div class="card-body">
                 <h3 class="text-center mb-4">Add Product</h3>
+                 <!-- Use th:if instead of th:block -->
+                <div class="text-center">
+                  <div th:if="${session.Success}">
+                    <p class="text-success" th:text="${session.Success}"></p>
+                    <th:block
+                      th:text="${@commService.removeSessionMessage}"
+                    ></th:block>
+                  </div>
+                  <div th:if="${session.Error}">
+                    <p class="text-danger" th:text="${session.Error}"></p>
+                    <th:block
+                      th:text="${@commService.removeSessionMessage}"
+                    ></th:block>
+                  </div>
+                </div>
+
                 <form action="/admin/saveproduct" method="post" enctype="multipart/form-data">
                   <!-- Product Name -->
                   <div class="mb-3">

@@ -9,14 +9,14 @@
     <div class="container my-5 ">
         <div class="card p-5">
             <h3 class="card-title text-center mb-4">Edit Category</h3>
-            <form id="editCategoryForm" novalidate>
-                <!-- Category ID (Hidden) -->
-                <input type="hidden" id="categoryId" name="categoryId" value="1"> <!-- Replace with dynamic category ID -->
-
+            <form id="editCategoryForm" action="/admin/update"
+            method="post"
+            enctype="multipart/form-data">
+                <input type="hidden" name="id" th:value="${category.id}">
                 <!-- Category Name -->
                 <div class="mb-3">
                     <label for="categoryName" class="form-label">Category Name</label>
-                    <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Enter category name" required>
+                    <input type="text" class="form-control" id="categoryName" name="categoryName" th:value="${category.categoryName}" placeholder="Enter category name" required>
                     <div class="invalid-feedback">Please provide a category name.</div>
                 </div>
 
@@ -24,12 +24,16 @@
                 <div class="mb-3">
                     <label for="categoryImage" class="form-label">Category Image</label>
                     <input type="file" class="form-control" id="categoryImage" name="file" placeholder="update category">
-                    <img th:src="">
+                    <img th:src="@{'/img/category/'+${category.categoryImageName}}" width="200px">
                 </div>
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Update Category</button>
-                    <button type="button" class="btn btn-secondary" onclick="window.location.href='categories.html'">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a
+                          th:href="@{/admin/category}"
+                          class="btn btn-sm"
+                          >Cancal</a
+                        >
                 </div>
             </form>
         </div>
