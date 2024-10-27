@@ -1,13 +1,32 @@
 package com.example.ecommerce.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.example.ecommerce.modul.Category;
+import com.example.ecommerce.modul.Product;
+import com.example.ecommerce.service.CategoryService;
+import com.example.ecommerce.service.ProductService;
 
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/")
-    public String index(){
+    public String index( Model modul){
+        List<Category> categories = categoryService.getAllCategories();
+        modul.addAttribute("categories", categories);
         return "index";
     }@GetMapping("/login")
     public String login(){
@@ -17,16 +36,20 @@ public class HomeController {
         return "login&registration/register";
     }
     @GetMapping("/products")
-    public String allproducts(){
+    public String allproducts(Model modul){
+        List<Category> categories = categoryService.getAllCategories();
+        List<Product> products = productService.getAllProduct();
+        modul.addAttribute("categories", categories);
+        modul.addAttribute("products", products);
         return "allproduct";
     }
-    @GetMapping("/view")
-    public String viewproduct(){
+    @GetMapping("/view/{id}")
+    public String viewproduct(@PathVariable long id, Model modul){
+        List<Category> categories = categoryService.getAllCategories();
+        modul.addAttribute("categories", categories);
+        modul.addAttribute("product", productService.getProductById(id));
         return "view";
     }
-    @GetMapping("/cart")
-    public String viewcart(){
-        return "cart";
-    }
+    
 
 }

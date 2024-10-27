@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecommerce.modul.Category;
 import com.example.ecommerce.modul.Product;
 import com.example.ecommerce.repository.ProductRepo;
 
@@ -42,4 +43,7 @@ public class ProductService {
         return price - discountPrice;
     }
     
+    public List<Product> geProductByCategory(Category category){
+        return productRepo.findByCategory(category);
+    }
 }

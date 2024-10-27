@@ -20,16 +20,13 @@
         <div class="container-fluid my-4">
             <div class="row ">
                 <div class="col-md-2 mt-5 ">
-                    <div class="list-group shadows">
-                        <a href="#" class="list-group-item list-group-item-action color-nav" aria-current="true">
+                    <div class="list-group shadows p-3">
                           <b>Category</b>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action ">Cups</a>
-                        <a href="#" class="list-group-item list-group-item-action">Keychains</a>
-                        <a href="#" class="list-group-item list-group-item-action">Manga</a>
-                        <a href="#" class="list-group-item list-group-item-action">Shoes</a>
-                        <a href="#" class="list-group-item list-group-item-action">Sweatshits</a>
-                        <a href="#" class="list-group-item list-group-item-action">Toys</a>
+                          <div th:each="category : ${categories}">
+                            <hr>
+                            <a href="#" class="text-decoration-none text-dark" th:text="${category.categoryName}"></a>
+                            
+                        </div>                        
                       </div>
                 </div>
                 <div class="col-md-10">
@@ -37,245 +34,26 @@
                     <div class="container">
                         <div class="my-2 fs-4"><b>Cups</b></div>
                         <div class="container">
-                            <div class="row">
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
+                            <div class="row">                                       
+                              <div class="col-lg-4 col-md-6 col-12 mb-4" th:each="prod:${products}">
+                                <a th:href="@{'/view/'+${prod.id}}" class="text-decoration-none text-dark">
                                   <div class="card">
-                                    <img th:src="@{img/category/animecups.jpeg}" class="card-img-top" alt="...">
+                                    <img th:src="@{'img/product/'+${prod.productImageName}}"  alt="..." height="300rem">
                                     <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </a>
-                                </div>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animecups.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
+                                      <p class="card-text" th:text="${prod.productName}"></p>
+                                      <p class="card-text" th:text="${prod.finalPrice}"></p>
+                                      
                                     </div>
                                   </div>
                                 </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animecups.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                                <button class="see-more-arrow">see more</button>
+                                
                               </div>
                               
                             </div>
                           </div>
                     </div>
                     
-                    <div class="container">
-                        <div class="my-2 fs-4"><b>Keychains</b></div>
-                        <div class="container">
-                            <div class="row">
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animeKeychaines.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animeKeychaines.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animeKeychaines.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                                <button class="see-more-arrow">see more</button>
-                              </div>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="container">
-                      <div class="my-2 fs-4"><b>Manga</b></div>
-                      <div class="container">
-                          <div class="row">
-                            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                              <a href="/view" class="text-decoration-none text-dark">
-                                <div class="card">
-                                  <img th:src="@{img/category/AnimeManga.jpeg}" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <p class="card-text">Rs. 250</p>
-                                  </div>
-                                </div>
-                              </a>
-                            </div>
-                        
-                            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                              <a href="/view" class="text-decoration-none text-dark">
-                                <div class="card">
-                                  <img th:src="@{img/category/AnimeManga.jpeg}" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <p class="card-text">Rs. 250</p>
-                                  </div>
-                                </div>
-                              </a>
-                            </div>
-                        
-                            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                              <a href="/view" class="text-decoration-none text-dark">
-                                <div class="card">
-                                  <img th:src="@{img/category/AnimeManga.jpeg}" class="card-img-top" alt="...">
-                                  <div class="card-body">
-                                    <p class="card-text">Rs. 250</p>
-                                  </div>
-                                </div>
-                              </a>
-                              <button class="see-more-arrow">see more</button>
-                            </div>
-                          </div>
-                        </div>
-                  </div>
-                    <div class="container">
-                        <div class="my-2 fs-4"><b>Shoes</b></div>
-                        <div class="container">
-                            <div class="row">
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/AnimeShoes.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/AnimeShoes.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/AnimeShoes.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                                <button class="see-more-arrow">see more</button>
-                              </div>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="container">
-                        <div class="my-2 fs-4"><b>Sweatshits</b></div>
-                        <div class="container">
-                            <div class="row">
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/AnimeSweatshirt.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/AnimeSweatshirt.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/AnimeSweatshirt.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                                <button class="see-more-arrow">see more</button>
-                              </div>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="container">
-                        <div class="my-2 fs-4"><b>Toys</b></div>
-                        <div class="container">
-                            <div class="row">
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animetoy.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animetoy.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </div>
-                          
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                <a href="/view" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{img/category/animetoy.jpeg}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p class="card-text">Rs. 250</p>
-                                    </div>
-                                  </div>
-                                </a>
-                                <button class="see-more-arrow">see more</button>
-                              </div>
-                            </div>
-                          </div>
-                    </div>
+                    
                     
 
 
