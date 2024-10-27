@@ -29,7 +29,7 @@ public class CategoryService {
     }
 
 
-    public Category saveCategory(Category category) throws IOException {
+    public Category saveCategory(Category category){
         return categoryRepo.save(category);
     }
 

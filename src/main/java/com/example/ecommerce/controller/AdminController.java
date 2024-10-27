@@ -40,13 +40,7 @@ public class AdminController {
         return "admin/index";
     }
 
-    @GetMapping("/product")
-    public String loadaddproduct(Model model) {
-        List<Category> categories = categoryService.getAllCategories();
-        model.addAttribute("categories", categories);
-        return "admin/addproduct";
-    }
-
+ 
     // category controller
 
     @GetMapping("/category")
@@ -99,17 +93,16 @@ public class AdminController {
     @GetMapping("/edit/{id}")
     public String loadEditCategory(@PathVariable int id, Model model) {
         model.addAttribute("category", categoryService.getCategoryById(id));
-        return "admin/update";
+        return "admin/editcategory";
     }
 
     @PostMapping("/update")
-    public String updateCategory(@ModelAttribute Category category, @RequestParam("file") MultipartFile file)
-            throws IOException {
+    public String updateCategory(@ModelAttribute Category category, @RequestParam("file") MultipartFile file){
         Category oldCategory = categoryService.getCategoryById(category.getId());
         if (!ObjectUtils.isEmpty(oldCategory)) {
             oldCategory.setCategoryName(category.getCategoryName());
             String imageName = file.isEmpty() ? oldCategory.getCategoryImageName() : file.getOriginalFilename();
-            System.out.println(imageName);
+            // System.out.println(imageName);
             oldCategory.setCategoryImageName(imageName);
         }
 
@@ -118,12 +111,20 @@ public class AdminController {
     }
 
     // product controller
+    @GetMapping("/product")
+    public String loadaddproduct(Model model) {
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        return "admin/addproduct";
+    }
     @PostMapping("/saveproduct")
     public String saveProduct(@ModelAttribute Product product, @RequestParam("imageFile") MultipartFile imageFile,
             HttpSession session) throws IOException {
 
         String imageName = imageFile != null ? imageFile.getOriginalFilename() : "default.jpg";
         product.setProductImageName(imageName);
+        product.setDiscount(0);
+        product.setFinalPrice(product.getPrice());
 
         Product saveCategory = productService.saveProduct(product);
 
@@ -144,5 +145,49 @@ public class AdminController {
 
         return "redirect:/admin/product";
     }
+    // view product controller
+    @GetMapping("/allproduct")
+    public String viewProduct(Model model) {
+        model.addAttribute("products", productService.getAllProduct());
+        return "admin/products";
+    }
+    @GetMapping("/deleteproduct/{id}")
+    public String deleteProduct(@PathVariable("id") long id) {
 
+        productService.deleteProduct(id);
+
+        return "redirect:/admin/allproduct";
+
+    }
+    @GetMapping("/editproduct/{id}")
+    public String editProduct(@PathVariable("id") long id, Model model) {
+        model.addAttribute("product",productService.getProductById(id));
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        return "admin/editproduct";
+    }
+
+    @PostMapping("/updateproduct")
+    public String updateProduct(@ModelAttribute Product product, @RequestParam("file") MultipartFile file){
+        Product oldProduct = productService.getProductById(product.getId());
+        
+        if(!ObjectUtils.isEmpty(oldProduct)){
+            oldProduct.setProductName(product.getProductName());
+            oldProduct.setPrice(product.getPrice());
+            oldProduct.setDiscount(product.getDiscount());
+            oldProduct.setFinalPrice(productService.getDiscountPrice(product.getPrice(),product.getDiscount()));
+            oldProduct.setStock(product.getStock());
+            oldProduct.setProductDescription(product.getProductDescription());
+            oldProduct.setCategory(product.getCategory());
+            String imageName = file.isEmpty() ? oldProduct.getProductImageName() : file.getOriginalFilename();
+            oldProduct.setProductImageName(imageName);
+        }else{
+            System.out.println("awetet");
+        }
+
+        productService.saveProduct(oldProduct);
+
+
+        return "redirect:/admin/allproduct";
+    }
 }

@@ -71,7 +71,7 @@
                 <h4>Category Details</h4>
               </div>
               <div class="card-body">
-                <table class="table table-bordered">
+                <table class="table table-striped table-hover table-bordered">
                   <thead class="table-light">
                     <tr>
                       <th>Id</th>
@@ -81,11 +81,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="category : ${categories}">
-                      <td th:text="${category.id}"></td>
+                    <tr th:each="category ,c:${categories}">
+                      <td th:text="${c.count}"></td>
                       <td th:text="${category.categoryName}"></td>
-                      <td> <img th:src="@{'/img/category/'+${category.categoryImageName}}" alt="Category Image" width="100px" /></td>
-                      <td class="d-flex justify-content-between">
+                      <td> <img th:src="@{'/img/category/'+${category.categoryImageName}}" alt="Category Image" width="70rem" /></td>
+                      <td>
                         <a
                           th:href="'/admin/edit/'+${category.id}"
                           class="btn btn-sm"
