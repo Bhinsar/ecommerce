@@ -1,62 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{nav/base :: layout(~{::section})}">
 <head>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="/static/img/logo.jpeg">
-        <title>Ecommerce Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/img/logo.jpeg">
+    <title>Ecommerce Website</title>
 </head>
 <body>
     <section>
-      <style>
-        .card{
-          transition: transform 0.2s ease;
-        }
-        .card:hover {
-          transform: scale(1.05);
-      }
-      </style>
+        <style>
+            .card {
+                transition: transform 0.2s ease;
+            }
+            .card:hover {
+                transform: scale(1.05);
+            }
+        </style>
         <div class="container-fluid my-4">
-            <div class="row ">
-                <div class="col-md-2 mt-5 ">
+            <div class="row">
+                <!-- Category Sidebar -->
+                <div class="col-md-2 mt-5">
                     <div class="list-group shadows p-3">
-                          <b>Category</b>
-                          <div th:each="category : ${categories}">
+                        <b>Category</b>
+                        <div th:each="category : ${categories}">
                             <hr>
-                            <a href="#" class="text-decoration-none text-dark" th:text="${category.categoryName}"></a>
-                            
-                        </div>                        
-                      </div>
+                            <a th:href="@{'product/'+${category.categoryName}}" class="text-decoration-none text-dark" th:text="${category.categoryName}"></a>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- Products Display -->
                 <div class="col-md-10">
-                    <div class="text-center  fs-4"><b> Products</b></div> 
-                    <div class="container">
-                        <div class="my-2 fs-4"><b>Cups</b></div>
+                    <div class="text-center fs-4"><b>Products</b></div>
+                    
+                    <!-- Iterate Over Each Category -->
+                    <div th:each="entry : ${categoryProductsMap}">
+                        <!-- Access key (category) and value (products) from the map entry -->
+                        <div th:with="category=${entry.key}" class="my-2 fs-4 my-3">
+                            <b th:text="${category.categoryName}"></b>
+                        </div>
                         <div class="container">
-                            <div class="row">                                       
-                              <div class="col-lg-4 col-md-6 col-12 mb-4" th:each="prod:${products}">
-                                <a th:href="@{'/view/'+${prod.id}}" class="text-decoration-none text-dark">
-                                  <div class="card">
-                                    <img th:src="@{'img/product/'+${prod.productImageName}}"  alt="..." height="300rem">
-                                    <div class="card-body">
-                                      <p class="card-text" th:text="${prod.productName}"></p>
-                                      <p class="card-text" th:text="${prod.finalPrice}"></p>
-                                      
-                                    </div>
-                                  </div>
-                                </a>
+                            <div class="row">
+                                <!-- Show 3 Products for Each Category -->
+                                <div class="col-lg-4 col-md-6 col-12 mb-4" th:each="prod : ${entry.value}">
+                                    <a th:href="@{'/view/'+${prod.id}}" class="text-decoration-none text-dark">
+                                        <div class="card">
+                                            <img th:src="@{'img/product/'+${prod.productImageName}}" alt="Product Image" height="300rem">
+                                            <div class="card-body">
+                                                <p class="card-text" th:text="${prod.productName}"></p>
+                                                <p class="card-text" th:text="${prod.finalPrice}"></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                                 
-                              </div>
-                              
                             </div>
+                            <div class="d-flex justify-content-end" th:with="category=${entry.key}" >
+                              <a th:href="@{'product/'+${category.categoryName}}" class="btn btn-primary">See more <i class="fa-solid fa-arrow-right"></i></a>
                           </div>
+                        </div>
+                        
                     </div>
                     
                     
-                    
-
-
                 </div>
             </div>
         </div>

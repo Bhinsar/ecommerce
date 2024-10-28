@@ -43,7 +43,9 @@ public class ProductService {
         return price - discountPrice;
     }
     
-    public List<Product> geProductByCategory(Category category){
-        return productRepo.findByCategory(category);
+    public List<Product> getProductsByCategory(String string){
+        return productRepo.findByCategory(string);
     }
+
+
 }

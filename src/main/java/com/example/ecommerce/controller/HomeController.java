@@ -1,6 +1,9 @@
 package com.example.ecommerce.controller;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +27,9 @@ public class HomeController {
     private ProductService productService;
 
     @GetMapping("/")
-    public String index( Model modul){
+    public String index( Model model){
         List<Category> categories = categoryService.getAllCategories();
-        modul.addAttribute("categories", categories);
+        model.addAttribute("categories", categories);
         return "index";
     }@GetMapping("/login")
     public String login(){
@@ -36,13 +39,22 @@ public class HomeController {
         return "login&registration/register";
     }
     @GetMapping("/products")
-    public String allproducts(Model modul){
+    public String allproducts(Model modul) {
         List<Category> categories = categoryService.getAllCategories();
-        List<Product> products = productService.getAllProduct();
+        Map<Category, List<Product>> categoryProductsMap = new LinkedHashMap<>(); // Use LinkedHashMap
+
+        for (Category category : categories) {
+            List<Product> productsByCategory = productService.getProductsByCategory(category.getCategoryName());
+            List<Product> limitedProducts = productsByCategory.stream().limit(3).toList();  // Limit to 3 products per category
+            categoryProductsMap.put(category, limitedProducts);
+        }
+
         modul.addAttribute("categories", categories);
-        modul.addAttribute("products", products);
+        modul.addAttribute("categoryProductsMap", categoryProductsMap);
         return "allproduct";
     }
+
+
     @GetMapping("/view/{id}")
     public String viewproduct(@PathVariable long id, Model modul){
         List<Category> categories = categoryService.getAllCategories();
@@ -50,6 +62,13 @@ public class HomeController {
         modul.addAttribute("product", productService.getProductById(id));
         return "view";
     }
-    
+    @GetMapping("/product/{category}")
+    public String productByCategory(@PathVariable String category ,Model model){
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        List<Product> products = productService.getProductsByCategory(category);
+        model.addAttribute("products", products);
+        return "category";
+    }    
 
 }
