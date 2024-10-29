@@ -36,7 +36,7 @@
             <i class="fa-solid fa-list"></i> Category
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" th:each="category:${categories}" href="#">[[${category.categoryName}]]</a></li>
+            <li><a class="dropdown-item" th:each="category:${categories}" th:href="@{'/product/'+${category.categoryName}}">[[${category.categoryName}]]</a></li>
           </ul>
         </li>
       </ul>

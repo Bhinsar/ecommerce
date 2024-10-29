@@ -1,6 +1,5 @@
 package com.example.ecommerce.controller;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,16 +27,23 @@ public class HomeController {
 
     @GetMapping("/")
     public String index( Model model){
+        List<Product> products = productService.getAllLatestProduct();
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
+        model.addAttribute("prod", products);
         return "index";
-    }@GetMapping("/login")
+    }
+    
+    @GetMapping("/login")
     public String login(){
         return "login&registration/login";
-    }@GetMapping("/register")
+    }
+    
+    @GetMapping("/register")
     public String register(){
         return "login&registration/register";
     }
+    
     @GetMapping("/products")
     public String allproducts(Model modul) {
         List<Category> categories = categoryService.getAllCategories();

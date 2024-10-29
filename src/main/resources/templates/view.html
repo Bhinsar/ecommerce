@@ -12,8 +12,8 @@
               position: absoute;
             }
           </style>
-        <div class="container product-detail mt-5">
-            <h3 class="text-center">Product Details</h3>
+        <div class="container product-detail">
+            <h3 class="text-center my-5">Product Details</h3>
             <div class="row">
                 <!-- Product Image -->
                 <div class="col-md-6">
@@ -25,14 +25,22 @@
                     <strong>Description:</strong><p th:text="${product.productDescription}"> </p>
                     <p><strong>Product Details:</strong></p>
                     <ul>
-                        <li>Status: <span class="status-available">Available</span><span class="status-out-off-Stock">Out off stock</span></li>
-                        <li>Category: Electronics</li>
+                        <li>Status: 
+                            <span th:if="${product.stock > 0}">
+                                <span class="status-available" th:text="'Available'">Available</span>
+                            </span>
+                            <span th:unless="${product.stock > 0}">
+                                <span class="status-available" th:text="'Out of stock'">Out of stock</span>
+                            </span>
+                        <li th:text="'Category: '+${product.category}"></li>
                         <li>Policy: 7 Days Replacement & Return</li>
                     </ul>
                     <div class="container fs-5">
                         <div class="price-container">
-                            <del th:text="'₹'+${product.price}"></del>
-                            <div class="text-success" th:text="${product.discount}+'%'"></div>
+                            <div th:if="@{${product.discount} != 0}">
+                                <del th:text="'₹'+${product.price}"></del>
+                                <div class="text-success" th:text="${product.discount}+'%'"></div>
+                            </div>
                             <div th:text="'₹'+${product.finalPrice}">7,749</div>
                             
                         </div>
@@ -46,8 +54,14 @@
                     </div>
     
                     <!-- Add to Cart Button -->
-                    <button class="btn ">Add to Cart</button>
-                    <a href="/cart"><button class="btn ">Show my Cart</button></a>
+                    <div th:if="${product.stock > 0}">
+                        <a href="#" class="btn ">Add to Cart</a>
+                        <a href="#" class="btn">Show my Cart</a>
+                    </div>
+                    <div th:unless="${product.stock > 0}">
+                        <a href="#" class="btn">Out of Stock</a>
+                    </div> 
+                    
 
                 </div>
             </div>

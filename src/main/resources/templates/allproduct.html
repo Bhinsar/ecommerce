@@ -23,8 +23,10 @@
                     <div class="list-group shadows p-3">
                         <b>Category</b>
                         <div th:each="category : ${categories}">
+                            <a th:href="@{'product/'+${category.categoryName}}" class="text-decoration-none text-dark">
                             <hr>
-                            <a th:href="@{'product/'+${category.categoryName}}" class="text-decoration-none text-dark" th:text="${category.categoryName}"></a>
+                            <div th:text="${category.categoryName}"></div>
+                        </a>
                         </div>
                     </div>
                 </div>

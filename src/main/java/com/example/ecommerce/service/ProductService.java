@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ecommerce.modul.Category;
 import com.example.ecommerce.modul.Product;
 import com.example.ecommerce.repository.ProductRepo;
 
@@ -45,6 +44,13 @@ public class ProductService {
     
     public List<Product> getProductsByCategory(String string){
         return productRepo.findByCategory(string);
+    }
+
+
+    public List<Product> getAllLatestProduct() {
+        List<Product> LaterstProduct = productRepo.findAllLatestProducts();
+        List<Product> limitedProducts = LaterstProduct.stream().limit(7).toList(); 
+        return limitedProducts;
     }
 
 
