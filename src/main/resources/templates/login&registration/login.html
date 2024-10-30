@@ -11,20 +11,16 @@
 <body>
   <div class="login-container">
     <h2 class="text-center">Login</h2>
-    <p class="text-center">Hi, Welcome back 👋</p>
-    
-    <button class="btn btn-google mb-3">Login with Google</button>
-    
-    <div class="text-center mb-3">or Login with Email</div>
-    
-    <form>
+    <p class="text-center">Hi, Welcome back 👋</p>   
+    <form action="/login" method="post">
+        <div th:if="${param.error}" class="alert alert-danger" >Invalid email and Password</div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="e.g. johndoe@gmail.com" required>
+            <input name="username" type="email" class="form-control" id="email" placeholder="e.g. johndoe@gmail.com" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+            <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
         </div>
         <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="rememberMe">

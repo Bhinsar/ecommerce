@@ -1,19 +1,35 @@
 package com.example.ecommerce.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ecommerce.modul.Category;
 import com.example.ecommerce.modul.Product;
+import com.example.ecommerce.modul.Users;
 import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.ProductService;
+import com.example.ecommerce.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -25,6 +41,10 @@ public class HomeController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
+
+    // home  page
     @GetMapping("/")
     public String index( Model model){
         List<Product> products = productService.getAllLatestProduct();
@@ -34,16 +54,8 @@ public class HomeController {
         return "index";
     }
     
-    @GetMapping("/login")
-    public String login(){
-        return "login&registration/login";
-    }
-    
-    @GetMapping("/register")
-    public String register(){
-        return "login&registration/register";
-    }
-    
+
+    // product page
     @GetMapping("/products")
     public String allproducts(Model modul) {
         List<Category> categories = categoryService.getAllCategories();
@@ -60,6 +72,14 @@ public class HomeController {
         return "allproduct";
     }
 
+    @GetMapping("/product/{category}")
+    public String productByCategory(@PathVariable String category ,Model model){
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        List<Product> products = productService.getProductsByCategory(category);
+        model.addAttribute("products", products);
+        return "category";
+    }   
 
     @GetMapping("/view/{id}")
     public String viewproduct(@PathVariable long id, Model modul){
@@ -68,13 +88,44 @@ public class HomeController {
         modul.addAttribute("product", productService.getProductById(id));
         return "view";
     }
-    @GetMapping("/product/{category}")
-    public String productByCategory(@PathVariable String category ,Model model){
-        List<Category> categories = categoryService.getAllCategories();
-        model.addAttribute("categories", categories);
-        List<Product> products = productService.getProductsByCategory(category);
-        model.addAttribute("products", products);
-        return "category";
-    }    
+    // login page
+    @GetMapping("/signin")
+    public String login(){
+        return "login&registration/login";
+    }
+    // registration page
+    @GetMapping("/register")
+    public String register(){
+        return "login&registration/register";
+    }
+
+    @PostMapping("/saveuser")
+    public String saveUser(@ModelAttribute Users users,@RequestParam("cpassword") String cpassword, @RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
+        // chech that password and confrim password are same
+        if(!users.getPassword().equals(cpassword)){
+            session.setAttribute("Error", "Password and Confrim Password don't mach");
+            return "redirect:/register";
+        }
+        // user mail check
+        if(!userService.userexist(users.getEmail())){
+            session.setAttribute("Error", "User Already Exist");
+            return "redirect:/register";
+        }
+        String imgeName = file.isEmpty() ? "deafult.jpeg":file.getOriginalFilename();
+        users.setProfileImageName(imgeName);
+        Users users1 = userService.saveUser(users);
+        if(!ObjectUtils.isEmpty(users1)){
+            if(!file.isEmpty()){
+                File saveFile = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "user"+ File.separator + imgeName);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            }
+        }else{
+            session.setAttribute("Error", "Something Wrong on the server");
+            return "redirect:/register";
+        }
+        return  "redirect:/";
+
+    }
 
 }
