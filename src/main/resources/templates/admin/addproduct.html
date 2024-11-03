@@ -8,6 +8,7 @@
 <body>
   <section>
     <div class="container mt-5">
+      
         <div class="row justify-content-center">
           <div class="col-md-6">
             <div class="card shadow">
@@ -71,8 +72,16 @@
                   </div>
                 
                   <!-- Submit Button -->
-                  <button type="submit" class="btn btn-primary w-100">Submit</button>
+                  <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn ">Submit</button>
+                    <a
+                          th:href="@{/admin/}"
+                          class="btn"
+                          >Cancal</a
+                        >
+                  </div>
                 </form>
+                
                 
               </div>
             </div>

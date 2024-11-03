@@ -43,3 +43,15 @@ footer {
 .shadows{
     box-shadow: 0px 10px 15px black;
 }
+.userImg {
+    width: 35px;              
+    height: 35px;             
+    border-radius: 50%;       
+    object-fit: cover;        
+    border: 2px solid #fff;   
+    margin-right: 10px;       
+    vertical-align: middle;   
+}
+.custom-cursor-pointer {
+    cursor: pointer;
+}

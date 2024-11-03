@@ -43,16 +43,28 @@
 
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn" type="submit">Search</button>
+          <button class="btn custom-cursor-pointer" type="submit">Search</button>
         </form>
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="/signin"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/register">Register</a>
-        </li>
+        <th:block th:if="${userdetails==null}">
+          <li class="nav-item">
+            <a class="nav-link " href="/signin"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/register">Register</a>
+          </li>
+        </th:block>
+        <th:block th:if="${userdetails!=null}">
+          <li class="nav-item dropdown d-flex">
+            <img class="userImg" th:src="@{'/img/user/'+${userdetails.profileImageName}}" alt="">
+            <a class="nav-link dropdown-toggle custom-cursor-pointer"  data-bs-toggle="dropdown"th:text="${userdetails.name}"></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+        </th:block>
       </ul>
     </div>
   </div>

@@ -1,5 +1,7 @@
 package com.example.ecommerce.modul;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,4 +24,9 @@ public class Users {
     private String password;
     private String profileImageName;
     private String role;
+    private boolean isEnable;
+    private Boolean accountNonLocked;
+    private Integer failedAttempt;
+    private Date lockTime;
+    private String resetToken;
 }

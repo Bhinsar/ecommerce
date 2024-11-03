@@ -2,14 +2,15 @@ package com.example.ecommerce.controller;
 
 import com.example.ecommerce.modul.Category;
 import com.example.ecommerce.modul.Product;
+import com.example.ecommerce.modul.Users;
 
 import jakarta.servlet.http.HttpSession;
 
 import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.ProductService;
+import com.example.ecommerce.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -34,6 +35,18 @@ public class AdminController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
+    
+    @ModelAttribute
+    public void getUserDetails(Principal p,Model m){
+        if(p!=null){
+            String email = p.getName();
+            Users users = userService.getUserByEmail(email);
+            m.addAttribute("userdetails", users);
+        }
+    }
 
     @GetMapping("/")
     public String index() {
@@ -69,14 +82,16 @@ public class AdminController {
                 session.setAttribute("Error", "Not saved ! internal server error");
             } else {
 
-                File saveFile = new ClassPathResource("static/img").getFile();
+                File saveFile = new File("D:/ecommerce/src/main/resources/static/img");
+            // File saveFile = new ClassPathResource("static/img").getFile();
+            
 
                 Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "category" + File.separator
-                        + file.getOriginalFilename());
+                        + file.getOriginalFilename());            
 
-                System.out.println(path);
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
+                Files.write(path, file.getBytes());
+                
                 session.setAttribute("Success", "Saved successfully");
             }
         }
@@ -131,15 +146,17 @@ public class AdminController {
         if (ObjectUtils.isEmpty(saveCategory)) {
             session.setAttribute("Error", "Not saved ! internal server error");
         } else {
+            
+            File saveFile = new File("D:/ecommerce/src/main/resources/static/img");
+            // File saveFile = new ClassPathResource("static/img").getFile();
+            
 
-            File saveFile = new ClassPathResource("static/img").getFile();
+             Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product" + File.separator
+                    + imageFile.getOriginalFilename());            
+            
 
-            Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product" + File.separator
-                    + imageFile.getOriginalFilename());
-
-            System.out.println(path);
-            Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
+            Files.write(path, imageFile.getBytes());
+            
             session.setAttribute("Success", "Saved successfully");
         }
 
@@ -152,7 +169,7 @@ public class AdminController {
         return "admin/products";
     }
     @GetMapping("/deleteproduct/{id}")
-    public String deleteProduct(@PathVariable("id") long id) {
+    public String deleteProduct(@PathVariable("id") Integer id) {
 
         productService.deleteProduct(id);
 
@@ -160,7 +177,7 @@ public class AdminController {
 
     }
     @GetMapping("/editproduct/{id}")
-    public String editProduct(@PathVariable("id") long id, Model model) {
+    public String editProduct(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("product",productService.getProductById(id));
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
@@ -190,4 +207,18 @@ public class AdminController {
 
         return "redirect:/admin/allproduct";
     }
+
+    // user page mapping
+    @GetMapping("/users")
+    public String userPage(Model model) {
+        model.addAttribute("user", userService.getAllUser());
+        return "admin/users";
+    }
+    
+    @GetMapping("updateSts")
+    public String updateUserAccountStatus(@RequestParam Boolean status,@RequestParam Integer id){
+        userService.updateAccountStatus(status,id);
+        return "redirect:/admin/users";
+    }
+
 }

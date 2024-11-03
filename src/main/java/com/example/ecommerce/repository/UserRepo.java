@@ -9,4 +9,5 @@ import com.example.ecommerce.modul.Users;
 public interface UserRepo extends JpaRepository<Users, Integer> {
     public Users findByEmail(String email);
     public boolean existsByEmail(String email);
+    public Users findByResetToken(String token);
 } 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.example.ecommerce.modul.Product;
 
 @Repository
-public interface ProductRepo extends JpaRepository<Product, Long> {
+public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     List<Product> findByCategory(String category);
     

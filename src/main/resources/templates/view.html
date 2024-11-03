@@ -15,6 +15,17 @@
         <div class="container product-detail">
             <h3 class="text-center my-5">Product Details</h3>
             <div class="row">
+                <!-- Use th:if instead of th:block -->
+                <th:block th:if="${session.Success}">
+                    <p class="text-success alert alert-success text-center" role="alert">[[${session.Success}]]</p>
+                    <th:block th:text="${@commService.removeSessionMessage}"></th:block>
+                </th:block>
+
+                <th:block th:if="${session.Error}">
+                    <p class="text-danger text-center  alert alert-danger">[[${session.Error}]]</p>
+                    <th:block th:text="${@commService.removeSessionMessage}"></th:block>
+
+                </th:block>
                 <!-- Product Image -->
                 <div class="col-md-6">
                     <img th:src="@{'/img/product/'+${product.productImageName}}" alt="Product Image" height="500rem">
@@ -55,8 +66,15 @@
     
                     <!-- Add to Cart Button -->
                     <div th:if="${product.stock > 0}">
-                        <a href="#" class="btn ">Add to Cart</a>
-                        <a href="#" class="btn">Show my Cart</a>
+                        <th:block th:if="${userdetails==null}">
+                            <a th:href="@{/signin}" class="btn ">Add to Cart</a>
+                            <a th:href="@{/signin}" class="btn">Show my Cart</a>
+                        </th:block>
+                        <th:block th:unless="${userdetails==null}">
+                            <a th:href="@{'/addCart?pid='+${product.id}+'&uid='+${userdetails.id}}" class="btn ">Add to Cart</a>
+                            <a th:href="@{'/carts?uid='+${userdetails.id}}" class="btn">Show my Cart</a>
+                        </th:block>
+                        
                     </div>
                     <div th:unless="${product.stock > 0}">
                         <a href="#" class="btn">Out of Stock</a>

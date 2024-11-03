@@ -47,7 +47,7 @@
                                 <div class="col-lg-4 col-md-6 col-12 mb-4" th:each="prod : ${entry.value}">
                                     <a th:href="@{'/view/'+${prod.id}}" class="text-decoration-none text-dark">
                                         <div class="card">
-                                            <img th:src="@{'img/product/'+${prod.productImageName}}" alt="Product Image" height="300rem">
+                                            <img th:src="@{'/img/product/'+${prod.productImageName}}" alt="Product Image" height="300rem">
                                             <div class="card-body">
                                                 <p class="card-text" th:text="${prod.productName}"></p>
                                                 <p class="card-text" th:text="${prod.finalPrice}"></p>

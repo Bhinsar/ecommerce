@@ -24,12 +24,12 @@ public class ProductService {
     }
 
 
-    public void deleteProduct(long id) {
+    public void deleteProduct(Integer id) {
         productRepo.deleteById(id);
     }
 
 
-    public Product getProductById(long id) {
+    public Product getProductById(Integer id) {
         Product product = productRepo.findById(id).orElse(null);
         return product;
     }
