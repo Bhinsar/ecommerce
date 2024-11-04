@@ -71,8 +71,8 @@
                             <a th:href="@{/signin}" class="btn">Show my Cart</a>
                         </th:block>
                         <th:block th:unless="${userdetails==null}">
-                            <a th:href="@{'/addCart?pid='+${product.id}+'&uid='+${userdetails.id}}" class="btn ">Add to Cart</a>
-                            <a th:href="@{'/carts?uid='+${userdetails.id}}" class="btn">Show my Cart</a>
+                            <a th:href="@{'/user/addCart?pid='+${product.id}+'&uid='+${userdetails.id}}" class="btn ">Add to Cart</a>
+                            <a href="/user/cart" class="btn">Show my Cart</a>
                         </th:block>
                         
                     </div>

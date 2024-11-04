@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.ecommerce.modul.Cart;
 import com.example.ecommerce.modul.Category;
 import com.example.ecommerce.modul.Product;
 import com.example.ecommerce.modul.Users;
@@ -53,7 +52,7 @@ public class HomeController {
     @Autowired
     private CommService commService;
 
-    @Autowired 
+    @Autowired
     private CartService cartService;
 
     @ModelAttribute
@@ -63,7 +62,9 @@ public class HomeController {
         if(p!=null){
             String email = p.getName();
             Users users = userService.getUserByEmail(email);
+            Integer countCart = cartService.getCount(users.getId());
             m.addAttribute("userdetails", users);
+            m.addAttribute("count",countCart);
         }
     }
     // home  page
@@ -201,14 +202,5 @@ public class HomeController {
 
         return "redirect:/reset_password?token="+token;
     }
-    @GetMapping("/addCart")
-    public String addToCart(@RequestParam("pid") Integer pid,@RequestParam("uid") Integer uid,HttpSession session){
-        Cart saveCart = cartService.saveCart(pid, uid);
-        if(saveCart == null){
-            session.setAttribute("Error", "Product Add to Cart Failed");
-        }else{
-            session.setAttribute("Success", "Product Add to Cart Successfully");
-        }
-        return "redirect:/view/"+pid;
-    }
+
 }

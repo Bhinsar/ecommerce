@@ -48,10 +48,12 @@ footer {
     height: 35px;             
     border-radius: 50%;       
     object-fit: cover;        
-    border: 2px solid #fff;   
-    margin-right: 10px;       
+    border: 2px solid #fff;         
     vertical-align: middle;   
 }
 .custom-cursor-pointer {
     cursor: pointer;
+}
+.boder{
+    border: 2px solid #2c1e4e !important;
 }

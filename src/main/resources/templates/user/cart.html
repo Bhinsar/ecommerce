@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{nav/base :: layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/img/logo.jpeg">
+    <title>Ecommerce Website</title>
+</head>
+<body>
+    <section>
+        <!-- Cart Page Content -->
+        <div class="container mt-5">
+            <h2 class="cart-title text-center">Shopping Cart</h2>
+            <div class="row d-flex justify-content-center align-items-center ">
+                <div class="card col-md-5 mx-3" >
+                    <!-- Cart Item -->
+                    <div class="d-flex justify-content-end align-items-center" th:each="cart,c:${cart}">
+                        <div class="mx-3" th:text="${c.count}"></div>
+                        <img th:src="@{'/img/product/'+${cart.product.productImageName}}" alt="Product Image" class="img-fluid" style="width: 100px;">
+                        <div class="text-end m-3">
+                            <h5 th:text="${cart.product.productName}"></h5>
+                            <p th:text ="'₹'+${cart.product.finalPrice}">₹500.00</p>
+                            <p th:text="'Category: '+${cart.product.category}"> Keychains</p>
+                            <div class="d-flex justify-content-end align-items-center">
+                                
+                                <form th:action="@{/user/cartQuantityUpdate}" class="d-flex justify-content-end align-items-center" method="post">
+                                    <input type="hidden" name="cartId" th:value="${cart.id}">
+                                    <label for="quntity">Quntity:</label>
+                                    <input type="number" class="form-control w-50 boder ml-5" name="quantity" onchange="this.form.submit()" th:value="${cart.quantity}" min="1">
+                                </form>
+                            </divdone 
+                            <a class="btn my-2" th:href="@{'/user/cartDelete?cid='+${cart.id}}">Delete</a>
+                            <hr>
+                        </div>
+                    </div>
+                    <!-- Add more cart items similarly here -->
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="card col-md-4">
+                    <div class="border p-3">
+                        <h4>Order Summary</h4>
+                        <p th:text="@{'Items Total: '+${totalOderPrice}}"></p>
+                        <button class="btn mt-3">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

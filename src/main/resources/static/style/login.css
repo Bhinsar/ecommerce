@@ -22,3 +22,6 @@ body {
 .btn {
     width: 100%;
 }
+.boder{
+    border: 2px solid  #2c1e4e;
+}
